@@ -11,7 +11,7 @@ export const getUsers = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   try {
     const users = await User.findOne({ id: req.params.id })
     res.status(200).json(users);
