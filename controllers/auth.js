@@ -23,7 +23,24 @@ export const auth = async (req, res) => {
 
     const token = generateAccessToken(user.id, user.role);
 
-    return res.status(200).json({message: 'Sign in successful', token: token});
+    return res.status(200).json({message: 'Sign in successful', token: token, user: user});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({message: 'Internal server error'});
+  }
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    console.log(req.user);
+
+    let authUser = await User.findOne({id: req.user.id});
+
+    if (!authUser) {
+      return res.status(404).json({message: `User ${username} is not found`});
+    }
+
+    return res.status(200).json({message: 'Sign in successful', user: authUser});
   } catch (error) {
     console.log(error);
     return res.status(500).json({message: 'Internal server error'});

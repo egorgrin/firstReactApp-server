@@ -9,7 +9,11 @@ import auth from './routes/auth.js';
 const app = express();
 app.use(bodyParser.json({limit: '30mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Укажи свой домен клиентского приложения
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Разрешенные методы
+  credentials: true, // Разрешить запросы с учетом учетных данных
+}));
 
 app.use('/users', usersRoutes)
 app.use('/friends', friendsRoutes)
